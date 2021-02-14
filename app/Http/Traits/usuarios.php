@@ -10,6 +10,8 @@ trait usuarios
 
     private static $conversaciones;
 
+    private static $users;
+
     public static function comprobarUser($datos)
     {
         //Si no existe el archivo "usuarios.json" lo crea junto con el primer usuario
@@ -79,5 +81,25 @@ trait usuarios
             }
             file_put_contents(storage_path('\app\public\historial.json'), json_encode(self::$conversaciones));
         }
+    }
+
+    public static function leerMensajes()
+    {
+        if (file_exists(storage_path('\app\public\historial.json'))) {
+            self::$conversaciones = json_decode(file_get_contents(storage_path('\app\public\historial.json')), true);
+        } else {
+            self::$conversaciones = [];
+        }
+        return self::$conversaciones;
+    }
+
+    public static function listaUsuarios()
+    {
+        if (file_exists(storage_path('\app\public\usuarios.json'))) {
+            self::$users = json_decode(file_get_contents(storage_path('\app\public\usuarios.json')));
+        } else {
+            self::$users = [];
+        }
+        return self::$users;
     }
 }
