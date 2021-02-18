@@ -29,7 +29,11 @@ trait usuarios
 
                     //comprueba si esta conectado, si esta devuelve un false
                     if ($usuarios->online == 'yes') {
-                        return false;
+                        if (isset($_SESSION['user']) && $usuarios->user == $_SESSION['user']) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                     /**si el usuario ya existe pero no esta conectado, no creamos una nueva entrada
                      *pero si modificamos la existente colocando la variable "online" a "yes" para que
